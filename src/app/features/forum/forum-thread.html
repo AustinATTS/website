@@ -1,0 +1,74 @@
+@if (thread(); as t) {
+  <section class="thread-header">
+    <div class="section-container">
+      <a mat-button routerLink="/forum" class="back-link">
+        <mat-icon>arrow_back</mat-icon>
+        Back to The Bakery Forum
+      </a>
+      <h1 class="thread-title">{{ t.title }}</h1>
+      <p class="thread-meta">
+        Started by {{ t.author }} · {{ t.createdAt | date:'mediumDate' }} · {{ t.replyCount }} replies
+      </p>
+    </div>
+  </section>
+
+  <section class="thread-posts">
+    <div class="section-container">
+      @for (post of posts(); track post.id; let i = $index) {
+        <mat-card appearance="outlined" class="post-card" [class.op-card]="i === 0">
+          <mat-card-header>
+            <mat-icon matCardAvatar>{{ i === 0 ? 'person' : 'chat' }}</mat-icon>
+            <mat-card-title>{{ post.author }}</mat-card-title>
+            <mat-card-subtitle>{{ post.createdAt | date:'medium' }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p class="post-content">{{ post.content }}</p>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  </section>
+
+  <section class="thread-reply">
+    <div class="section-container">
+      <mat-card appearance="outlined" class="reply-card">
+        <mat-card-header>
+          <mat-icon matCardAvatar>reply</mat-icon>
+          <mat-card-title>Post a Reply</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <form [formGroup]="replyForm" (ngSubmit)="submitReply()" class="reply-form">
+            @if (!auth.isLoggedIn()) {
+              <mat-form-field appearance="outline" class="reply-field">
+                <mat-label>Your Name (optional)</mat-label>
+                <input matInput formControlName="displayName" placeholder="Anonymous" />
+              </mat-form-field>
+            }
+            <mat-form-field appearance="outline" class="reply-field">
+              <mat-label>Write your reply...</mat-label>
+              <textarea matInput rows="4" formControlName="content"></textarea>
+              @if (replyForm.get('content')?.hasError('required') && replyForm.get('content')?.touched) {
+                <mat-error>Reply cannot be empty</mat-error>
+              }
+            </mat-form-field>
+            <button mat-raised-button class="reply-button" type="submit" [disabled]="submittingReply()">
+              <mat-icon>send</mat-icon>
+              {{ submittingReply() ? 'Posting…' : 'Reply' }}
+            </button>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </section>
+} @else {
+  <section class="thread-not-found">
+    <div class="section-container">
+      <h2>Thread not found 🥖</h2>
+      <p>This loaf seems to have gone stale.</p>
+      <a mat-button routerLink="/forum">
+        <mat-icon>arrow_back</mat-icon>
+        Back to The Bakery Forum
+      </a>
+    </div>
+  </section>
+}

@@ -1,0 +1,112 @@
+<section class="forum-header">
+  <div class="section-container">
+    <h1 class="page-title">
+      The Bakery Forum
+      <span class="title-decoration">🥖</span>
+    </h1>
+    <p class="forum-subtitle">A place to chat, share, and break bread with fellow developers.</p>
+  </div>
+</section>
+
+<section class="forum-categories">
+  <div class="section-container">
+    <h2 class="section-heading">Categories</h2>
+    <div class="categories-grid">
+      @for (cat of categories(); track cat.id) {
+        <mat-card
+          appearance="outlined"
+          class="category-card"
+          [class.active]="selectedCategory()?.id === cat.id"
+          (click)="selectCategory(cat)">
+          <mat-card-header>
+            <mat-icon matCardAvatar>{{ cat.icon }}</mat-icon>
+            <mat-card-title>{{ cat.name }}</mat-card-title>
+            <mat-card-subtitle>{{ cat.threadCount }} threads</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ cat.description }}</p>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  </div>
+</section>
+
+@if (selectedCategory(); as cat) {
+  <section class="forum-threads">
+    <div class="section-container">
+      <div class="threads-header">
+        <h2 class="section-heading">{{ cat.name }}</h2>
+        @if (auth.isLoggedIn()) {
+          <button mat-raised-button class="new-thread-btn" (click)="openNewThreadForm()">
+            <mat-icon>add</mat-icon>
+            New Thread
+          </button>
+        }
+      </div>
+
+      @if (showThreadForm()) {
+        <mat-card appearance="outlined" class="thread-form-card">
+          <h3 class="form-title">Create New Thread</h3>
+          <form [formGroup]="threadForm" (ngSubmit)="saveThread()" class="thread-form">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Thread Title</mat-label>
+              <input matInput formControlName="title" />
+              @if (threadForm.get('title')?.hasError('required') && threadForm.get('title')?.touched) {
+                <mat-error>Title is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Content (first post)</mat-label>
+              <textarea matInput rows="5" formControlName="content"></textarea>
+              @if (threadForm.get('content')?.hasError('required') && threadForm.get('content')?.touched) {
+                <mat-error>Content is required</mat-error>
+              }
+            </mat-form-field>
+
+            <div class="form-actions">
+              @if (threadError()) {
+                <p class="form-error">{{ threadError() }}</p>
+              }
+              <button mat-raised-button class="save-btn" type="submit" [disabled]="savingThread()">
+                <mat-icon>send</mat-icon>
+                {{ savingThread() ? 'Creating…' : 'Create Thread' }}
+              </button>
+              <button mat-stroked-button class="cancel-btn" type="button" (click)="cancelThreadForm()">Cancel</button>
+            </div>
+          </form>
+        </mat-card>
+      }
+
+      <div class="threads-list">
+        @for (thread of threads(); track thread.id) {
+          <a [routerLink]="['/forum', thread.slug || thread.id]" class="thread-item">
+            <div class="thread-icon">
+              @if (thread.pinned) {
+                <mat-icon class="pinned-icon">push_pin</mat-icon>
+              } @else {
+                <mat-icon>chat_bubble_outline</mat-icon>
+              }
+            </div>
+            <div class="thread-info">
+              <span class="thread-title">
+                @if (thread.pinned) {
+                  <span class="pinned-badge">Pinned</span>
+                }
+                {{ thread.title }}
+              </span>
+              <span class="thread-meta">
+                by {{ thread.author }} · {{ thread.replyCount }} replies ·
+                last reply {{ thread.lastReplyAt | date:'mediumDate' }}
+              </span>
+            </div>
+            <mat-icon class="thread-arrow">chevron_right</mat-icon>
+          </a>
+        } @empty {
+          <p class="empty-state">No threads in this category yet.</p>
+        }
+      </div>
+    </div>
+  </section>
+}
