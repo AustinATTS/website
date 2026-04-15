@@ -1,0 +1,71 @@
+<!-- Page Header -->
+<section class="projects-header">
+  <div class="section-container">
+    <h1 class="page-title">
+      Projects &amp; Repositories
+      <span class="title-decoration">🥖</span>
+    </h1>
+    <p class="header-subtitle">
+      A collection of projects and bread-themed creations.
+    </p>
+  </div>
+</section>
+
+<section class="projects-content">
+  <div class="section-container">
+
+    <div class="filter-bar">
+      <mat-chip-set class="filter-chips">
+        @for (filter of filters; track filter) {
+          <mat-chip-option
+            [selected]="activeFilter === filter"
+            (selectionChange)="$event.selected && applyFilter(filter)"
+          >
+            {{ filter }}
+          </mat-chip-option>
+        }
+      </mat-chip-set>
+      <span class="results-count">{{ filteredProjects.length }} projects</span>
+    </div>
+
+    <div class="projects-grid">
+      @for (project of filteredProjects; track project.name) {
+        <div class="project-wrapper" [class.featured]="project.featured">
+          @if (project.featured) {
+            <span class="featured-badge">⭐ Featured</span>
+          }
+          <app-project-card [project]="project" />
+        </div>
+      }
+    </div>
+
+    @if (filteredProjects.length === 0) {
+      <div class="no-results">
+        <span class="no-results-emoji">🍞</span>
+        <p>No projects found for this filter. Try another category!</p>
+      </div>
+    }
+
+  </div>
+</section>
+
+<section class="projects-links">
+  <div class="section-container">
+    <h2 class="section-title">
+      <mat-icon class="section-icon">link</mat-icon>
+      External Links
+    </h2>
+    <div class="links-grid">
+      @for (link of externalLinks; track link.label) {
+        <a class="link-card" [href]="link.url" target="_blank" rel="noopener noreferrer">
+          <mat-icon>{{ link.icon }}</mat-icon>
+          <div class="link-info">
+            <span class="link-label">{{ link.label }}</span>
+            <span class="link-display">{{ link.display }}</span>
+          </div>
+          <mat-icon class="link-arrow">open_in_new</mat-icon>
+        </a>
+      }
+    </div>
+  </div>
+</section>

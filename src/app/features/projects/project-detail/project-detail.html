@@ -1,0 +1,88 @@
+@if (loading()) {
+  <section class="project-detail-header">
+    <div class="section-container">
+      <p class="loading-text">Loading project…</p>
+    </div>
+  </section>
+} @else if (!project()) {
+  <section class="project-detail-header">
+    <div class="section-container">
+      <h1 class="page-title">Project Not Found</h1>
+      <p class="not-found-text">This project doesn't exist or has been removed.</p>
+      <a mat-flat-button routerLink="/projects" class="back-btn">
+        <mat-icon>arrow_back</mat-icon>
+        Back to Projects
+      </a>
+    </div>
+  </section>
+} @else {
+  <section class="project-detail-header">
+    <div class="section-container">
+      <a routerLink="/projects" class="back-link">
+        <mat-icon>arrow_back</mat-icon>
+        All Projects
+      </a>
+      <h1 class="page-title">
+        {{ project()!.name }}
+        @if (project()!.featured) {
+          <span class="featured-badge">⭐ Featured</span>
+        }
+      </h1>
+      <p class="project-subtitle">{{ project()!.description }}</p>
+      <div class="project-meta">
+        @if (project()!.language) {
+          <span class="meta-item">
+            <mat-icon>code</mat-icon>
+            {{ project()!.language }}
+          </span>
+        }
+        <span class="meta-item">
+          <mat-icon>calendar_today</mat-icon>
+          {{ project()!.createdAt | date:'mediumDate' }}
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section class="project-detail-content">
+    <div class="section-container">
+      <div class="content-layout">
+        <div class="main-content">
+          @if (project()!.content) {
+            <mat-card appearance="outlined" class="content-card">
+              <mat-card-content>
+                <div class="project-body" [innerHTML]="parseContent(project()!.content)"></div>
+              </mat-card-content>
+            </mat-card>
+          }
+        </div>
+
+        <aside class="sidebar">
+          <mat-card appearance="outlined" class="info-card">
+            <mat-card-content>
+              <h3 class="sidebar-heading">Project Info</h3>
+
+              @if (project()!.topics.length > 0) {
+                <div class="sidebar-section">
+                  <h4>Topics</h4>
+                  <mat-chip-set class="topic-chips">
+                    @for (topic of project()!.topics; track topic) {
+                      <mat-chip class="topic-chip">{{ topic }}</mat-chip>
+                    }
+                  </mat-chip-set>
+                </div>
+              }
+
+              <div class="sidebar-actions">
+                <a mat-flat-button [href]="project()!.githubUrl" target="_blank" rel="noopener noreferrer" class="github-btn">
+                  <mat-icon>code</mat-icon>
+                  View on GitHub
+                </a>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </aside>
+      </div>
+    </div>
+  </section>
+}
