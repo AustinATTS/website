@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "austin-site": {
+    "austinatts-site": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
