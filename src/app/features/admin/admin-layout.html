@@ -1,0 +1,47 @@
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <div class="sidebar-header">
+      <mat-icon class="sidebar-logo">bakery_dining</mat-icon>
+      <span class="sidebar-title">Admin Panel</span>
+    </div>
+
+    <mat-nav-list>
+      <a mat-list-item routerLink="/admin" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+        <mat-icon matListItemIcon>dashboard</mat-icon>
+        <span matListItemTitle>Dashboard</span>
+      </a>
+      <a mat-list-item routerLink="/admin/blogs" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>article</mat-icon>
+        <span matListItemTitle>Blog Management</span>
+      </a>
+      <a mat-list-item routerLink="/admin/projects" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>code</mat-icon>
+        <span matListItemTitle>Project Management</span>
+      </a>
+      <a mat-list-item routerLink="/admin/forums" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>forum</mat-icon>
+        <span matListItemTitle>Forum Management</span>
+      </a>
+      <a mat-list-item routerLink="/admin/polls" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>poll</mat-icon>
+        <span matListItemTitle>Poll Management</span>
+      </a>
+      <a mat-list-item routerLink="/admin/users" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>group</mat-icon>
+        <span matListItemTitle>User Management</span>
+      </a>
+      <a mat-list-item routerLink="/admin/comments" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>comment</mat-icon>
+        <span matListItemTitle>Comments</span>
+      </a>
+      <a mat-list-item routerLink="/admin/messages" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>mail</mat-icon>
+        <span matListItemTitle>Messages</span>
+      </a>
+    </mat-nav-list>
+  </aside>
+
+  <main class="admin-content">
+    <router-outlet />
+  </main>
+</div>
