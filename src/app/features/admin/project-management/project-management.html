@@ -1,0 +1,122 @@
+<div class="management-header">
+  <h1 class="page-title">
+    Project Management
+    <span class="title-decoration">🚀</span>
+  </h1>
+  <button mat-raised-button class="new-btn" (click)="openNewForm()">
+    <mat-icon>add</mat-icon>
+    New Project
+  </button>
+</div>
+
+@if (showForm()) {
+  <mat-card class="form-card">
+    <h2 class="form-title">{{ editingProject() ? 'Edit Project' : 'New Project' }}</h2>
+    <form [formGroup]="projectForm" (ngSubmit)="saveProject()" class="project-form">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" (input)="onNameChange()" />
+        @if (projectForm.get('name')?.hasError('required') && projectForm.get('name')?.touched) {
+          <mat-error>Name is required</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Slug</mat-label>
+        <input matInput formControlName="slug" />
+        @if (projectForm.get('slug')?.hasError('required') && projectForm.get('slug')?.touched) {
+          <mat-error>Slug is required</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>GitHub URL</mat-label>
+        <input matInput formControlName="githubUrl" placeholder="https://github.com/..." />
+        @if (projectForm.get('githubUrl')?.hasError('required') && projectForm.get('githubUrl')?.touched) {
+          <mat-error>GitHub URL is required</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" rows="2"></textarea>
+        @if (projectForm.get('description')?.hasError('required') && projectForm.get('description')?.touched) {
+          <mat-error>Description is required</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Content (detailed description, supports markdown-style formatting)</mat-label>
+        <textarea matInput formControlName="content" rows="10"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Language</mat-label>
+        <input matInput formControlName="language" placeholder="e.g. TypeScript, Python, C++" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Topics (comma-separated)</mat-label>
+        <input matInput formControlName="topics" placeholder="angular, firebase, web" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Image URL (optional)</mat-label>
+        <input matInput formControlName="imageUrl" />
+      </mat-form-field>
+
+      <mat-checkbox formControlName="featured" class="featured-checkbox">
+        Featured Project
+      </mat-checkbox>
+
+      <div class="form-actions">
+        @if (errorMessage()) {
+          <p class="form-error">{{ errorMessage() }}</p>
+        }
+        <button mat-raised-button class="save-btn" type="submit" [disabled]="saving()">
+          <mat-icon>save</mat-icon>
+          {{ saving() ? 'Saving…' : (editingProject() ? 'Update Project' : 'Create Project') }}
+        </button>
+        <button mat-stroked-button class="cancel-btn" type="button" (click)="cancelForm()">Cancel</button>
+      </div>
+    </form>
+  </mat-card>
+}
+
+@if (projects().length === 0) {
+  <div class="empty-state">
+    <mat-icon class="empty-icon">code</mat-icon>
+    <p>No projects yet. Create your first project!</p>
+  </div>
+} @else {
+  <div class="table-wrapper">
+    <div class="table-header">
+      <span class="col-name">Name</span>
+      <span class="col-language">Language</span>
+      <span class="col-featured">Featured</span>
+      <span class="col-date">Updated</span>
+      <span class="col-actions">Actions</span>
+    </div>
+
+    @for (project of projects(); track project.id) {
+      <mat-card class="table-row">
+        <span class="col-name">{{ project.name }}</span>
+        <span class="col-language">{{ project.language }}</span>
+        <span class="col-featured">
+          @if (project.featured) {
+            <mat-icon class="featured-icon">star</mat-icon>
+          }
+        </span>
+        <span class="col-date">{{ project.updatedAt | date:'mediumDate' }}</span>
+        <span class="col-actions">
+          <button mat-icon-button class="action-edit" (click)="openEditForm(project)" aria-label="Edit project">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button class="action-delete" (click)="deleteProject(project.id)" aria-label="Delete project">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </span>
+      </mat-card>
+    }
+  </div>
+}
