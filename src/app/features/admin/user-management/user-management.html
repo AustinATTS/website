@@ -1,0 +1,47 @@
+<div class="management-header">
+  <h1 class="page-title">
+    User Management
+    <span class="title-decoration">👥</span>
+  </h1>
+</div>
+
+@if (users().length === 0) {
+  <div class="empty-state">
+    <mat-icon class="empty-icon">group</mat-icon>
+    <p>No users found.</p>
+  </div>
+} @else {
+  <div class="table-wrapper">
+    <div class="table-header">
+      <span class="col-name">Name</span>
+      <span class="col-email">Email</span>
+      <span class="col-role">Role</span>
+      <span class="col-joined">Joined</span>
+      <span class="col-actions">Actions</span>
+    </div>
+
+    @for (user of users(); track user.uid) {
+      <mat-card class="table-row">
+        <span class="col-name">
+          <mat-icon class="user-avatar-icon">account_circle</mat-icon>
+          {{ user.displayName }}
+        </span>
+        <span class="col-email">{{ user.email }}</span>
+        <span class="col-role">
+          <span class="role-badge" [class.role-admin]="user.role === 'admin'">
+            {{ user.role }}
+          </span>
+        </span>
+        <span class="col-joined">{{ user.createdAt | date:'mediumDate' }}</span>
+        <span class="col-actions">
+          <button mat-icon-button class="action-role" (click)="toggleRole(user)" [attr.aria-label]="'Toggle role for ' + user.displayName">
+            <mat-icon>{{ user.role === 'admin' ? 'remove_moderator' : 'admin_panel_settings' }}</mat-icon>
+          </button>
+          <button mat-icon-button class="action-delete" (click)="deleteUser(user.uid)" [attr.aria-label]="'Delete ' + user.displayName">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </span>
+      </mat-card>
+    }
+  </div>
+}
