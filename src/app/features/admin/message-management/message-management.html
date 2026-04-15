@@ -1,0 +1,49 @@
+<div class="management-header">
+  <h1 class="page-title">
+    Contact Messages
+    <span class="title-decoration">📬</span>
+  </h1>
+  @if (unreadCount > 0) {
+    <span class="unread-badge">{{ unreadCount }} unread</span>
+  }
+</div>
+
+@if (errorMessage()) {
+  <p class="error-banner">{{ errorMessage() }}</p>
+}
+
+@if (messages().length === 0) {
+  <div class="empty-state">
+    <mat-icon class="empty-icon">mail</mat-icon>
+    <p>No contact messages yet.</p>
+  </div>
+} @else {
+  <div class="messages-list">
+    @for (msg of messages(); track msg.id) {
+      <mat-card class="message-card" [class.unread]="!msg.read">
+        <mat-card-header>
+          <mat-icon matCardAvatar class="message-icon">{{ msg.read ? 'mail' : 'mark_email_unread' }}</mat-icon>
+          <mat-card-title>{{ msg.subject }}</mat-card-title>
+          <mat-card-subtitle>
+            {{ msg.name }} · {{ msg.email }} · {{ msg.createdAt | date:'medium' }}
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="message-body">{{ msg.message }}</p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          @if (!msg.read) {
+            <button mat-button (click)="markAsRead(msg.id)" class="action-read">
+              <mat-icon>done</mat-icon>
+              Mark as Read
+            </button>
+          }
+          <button mat-button (click)="deleteMessage(msg.id)" class="action-delete">
+            <mat-icon>delete</mat-icon>
+            Delete
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    }
+  </div>
+}
