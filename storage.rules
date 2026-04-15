@@ -1,0 +1,53 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated()
+        && firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    function isOwner(uid) {
+      return isAuthenticated() && request.auth.uid == uid;
+    }
+
+    function isValidSize() {
+      return request.resource.size < 10 * 1024 * 1024;
+    }
+
+    function isAllowedType() {
+      return request.resource.contentType.matches('image/.*')
+          || request.resource.contentType.matches('application/pdf')
+          || request.resource.contentType.matches('text/.*');
+    }
+
+    match /blog-images/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin() && isValidSize() && isAllowedType();
+      allow delete: if isAdmin();
+    }
+
+    match /forum-attachments/{userId}/{allPaths=**} {
+      allow read: if true;
+      allow create: if isOwner(userId) && isValidSize() && isAllowedType();
+      allow delete: if isOwner(userId) || isAdmin();
+    }
+
+    match /poll-attachments/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin() && isValidSize() && isAllowedType();
+      allow delete: if isAdmin();
+    }
+
+    match /user-uploads/{userId}/{allPaths=**} {
+      allow read: if true;
+      allow create, update: if isOwner(userId) && isValidSize() && isAllowedType();
+      allow delete: if isOwner(userId) || isAdmin();
+    }
+  }
+}
