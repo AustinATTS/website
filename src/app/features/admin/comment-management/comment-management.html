@@ -1,0 +1,79 @@
+<div class="management-header">
+  <h1 class="page-title">
+    Comment Management
+    <span class="title-decoration">🗨️</span>
+  </h1>
+</div>
+
+<div class="tab-bar">
+  <mat-button-toggle-group [value]="activeTab()" hideSingleSelectionIndicator>
+    <mat-button-toggle value="forum" (change)="setTab('forum')">Forum Posts</mat-button-toggle>
+    <mat-button-toggle value="blog" (change)="setTab('blog')">Blog Comments</mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
+
+@if (activeTab() === 'forum') {
+  @if (forumComments().length === 0) {
+    <div class="empty-state">
+      <mat-icon class="empty-icon">forum</mat-icon>
+      <p>No forum posts found.</p>
+    </div>
+  } @else {
+    <div class="table-wrapper">
+      <div class="table-header">
+        <span class="col-author">Author</span>
+        <span class="col-content">Content</span>
+        <span class="col-thread">Thread</span>
+        <span class="col-date">Date</span>
+        <span class="col-actions">Actions</span>
+      </div>
+
+      @for (row of forumComments(); track row.post.id) {
+        <mat-card class="table-row">
+          <span class="col-author">{{ row.post.author }}</span>
+          <span class="col-content" [title]="row.post.content">{{ row.post.content }}</span>
+          <span class="col-thread">{{ row.threadTitle }}</span>
+          <span class="col-date">{{ row.post.createdAt | date:'mediumDate' }}</span>
+          <span class="col-actions">
+            <button mat-icon-button class="action-delete" (click)="deleteForumComment(row.post.id, row.post.threadId)" aria-label="Delete forum post">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </span>
+        </mat-card>
+      }
+    </div>
+  }
+}
+
+@if (activeTab() === 'blog') {
+  @if (blogComments().length === 0) {
+    <div class="empty-state">
+      <mat-icon class="empty-icon">comment</mat-icon>
+      <p>No blog comments found.</p>
+    </div>
+  } @else {
+    <div class="table-wrapper">
+      <div class="table-header">
+        <span class="col-author">Author</span>
+        <span class="col-content">Content</span>
+        <span class="col-thread">Blog Post</span>
+        <span class="col-date">Date</span>
+        <span class="col-actions">Actions</span>
+      </div>
+
+      @for (row of blogComments(); track row.comment.id) {
+        <mat-card class="table-row">
+          <span class="col-author">{{ row.comment.author }}</span>
+          <span class="col-content" [title]="row.comment.content">{{ row.comment.content }}</span>
+          <span class="col-thread">{{ row.postTitle }}</span>
+          <span class="col-date">{{ row.comment.createdAt | date:'mediumDate' }}</span>
+          <span class="col-actions">
+            <button mat-icon-button class="action-delete" (click)="deleteBlogComment(row.comment.postId, row.comment.id)" aria-label="Delete blog comment">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </span>
+        </mat-card>
+      }
+    </div>
+  }
+}
