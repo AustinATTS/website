@@ -1,0 +1,67 @@
+<mat-toolbar class="navbar">
+  <a class="logo" routerLink="/">🍞 Austin ATTS</a>
+
+  <span class="spacer"></span>
+
+  <nav class="desktop-nav">
+    @for (link of navLinks(); track link.path) {
+      <a mat-button
+         [routerLink]="link.path"
+         routerLinkActive="active-link"
+         [routerLinkActiveOptions]="link.path === '/' ? { exact: true } : { exact: false }">
+        {{ link.label }}
+      </a>
+    }
+
+    @if (auth.isAdmin()) {
+      <a mat-button routerLink="/admin" routerLinkActive="active-link">Admin</a>
+    }
+
+    @if (auth.isLoggedIn()) {
+      <button mat-button (click)="logout()" class="auth-btn">
+        <mat-icon>logout</mat-icon> Logout
+      </button>
+    } @else {
+      <a mat-button routerLink="/login" routerLinkActive="active-link" class="auth-btn">
+        <mat-icon>login</mat-icon> Sign In
+      </a>
+    }
+  </nav>
+
+  <button mat-icon-button
+          class="mobile-menu-btn"
+          [matMenuTriggerFor]="mobileMenu"
+          aria-label="Navigation menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <mat-menu #mobileMenu="matMenu">
+    @for (link of navLinks(); track link.path) {
+      <a mat-menu-item
+         [routerLink]="link.path"
+         routerLinkActive="active-link"
+         [routerLinkActiveOptions]="link.path === '/' ? { exact: true } : { exact: false }">
+        {{ link.label }}
+      </a>
+    }
+
+    @if (auth.isAdmin()) {
+      <a mat-menu-item routerLink="/admin">
+        <mat-icon>admin_panel_settings</mat-icon> Admin Panel
+      </a>
+    }
+
+    @if (auth.isLoggedIn()) {
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon> Logout
+      </button>
+    } @else {
+      <a mat-menu-item routerLink="/login">
+        <mat-icon>login</mat-icon> Sign In
+      </a>
+      <a mat-menu-item routerLink="/register">
+        <mat-icon>person_add</mat-icon> Register
+      </a>
+    }
+  </mat-menu>
+</mat-toolbar>

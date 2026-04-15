@@ -1,0 +1,23 @@
+.bread-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0;
+  padding: 0 1rem;
+
+  .line {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--bread-golden-crust, #d4a574),
+      transparent
+    );
+  }
+
+  .emoji {
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+}

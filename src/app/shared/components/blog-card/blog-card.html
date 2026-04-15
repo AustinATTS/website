@@ -1,0 +1,21 @@
+<mat-card class="blog-card" appearance="outlined">
+  <mat-card-header>
+    <mat-icon matCardAvatar class="blog-icon">article</mat-icon>
+    <mat-card-title>{{ post().title }}</mat-card-title>
+    <mat-card-subtitle>{{ post().date | date:'mediumDate' }} · {{ post().author }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p class="blog-excerpt">{{ post().excerpt }}</p>
+    <div class="blog-tags">
+      @for (tag of post().tags; track tag) {
+        <span class="tag">#{{ tag }}</span>
+      }
+    </div>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <a mat-button [routerLink]="['/blog', post().slug]">
+      Read More
+      <mat-icon>arrow_forward</mat-icon>
+    </a>
+  </mat-card-actions>
+</mat-card>

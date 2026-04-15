@@ -1,0 +1,45 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.project-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  border: 1px solid var(--bread-border);
+  background-color: var(--bread-surface);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px var(--bread-shadow);
+  }
+}
+
+.project-icon {
+  color: var(--bread-honey-accent);
+}
+
+.project-description {
+  color: var(--bread-text-secondary);
+  line-height: 1.6;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.project-topics {
+  margin-top: 0.75rem;
+}
+
+mat-card-content {
+  flex: 1;
+}
+
+mat-card-actions {
+  margin-top: auto;
+}

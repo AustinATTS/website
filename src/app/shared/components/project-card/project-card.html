@@ -1,0 +1,29 @@
+<mat-card class="project-card" appearance="outlined">
+  <mat-card-header>
+    <mat-icon matCardAvatar class="project-icon">code</mat-icon>
+    <mat-card-title>{{ project().name }}</mat-card-title>
+    @if (project().language) {
+      <mat-card-subtitle>{{ project().language }}</mat-card-subtitle>
+    }
+  </mat-card-header>
+  <mat-card-content>
+    <p class="project-description">{{ project().description }}</p>
+    @if (project().topics.length > 0) {
+      <mat-chip-set class="project-topics">
+        @for (topic of project().topics; track topic) {
+          <mat-chip class="topic-chip">{{ topic }}</mat-chip>
+        }
+      </mat-chip-set>
+    }
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <a mat-button [routerLink]="['/projects', project().slug]">
+      View Details
+      <mat-icon>arrow_forward</mat-icon>
+    </a>
+    <a mat-button [href]="project().githubUrl" target="_blank" rel="noopener noreferrer">
+      <mat-icon>open_in_new</mat-icon>
+      GitHub
+    </a>
+  </mat-card-actions>
+</mat-card>

@@ -1,0 +1,68 @@
+$toolbar-bg: #5D4037;
+$cream: #FFF8E1;
+$active-accent: #FFD54F;
+
+.navbar {
+  background: $toolbar-bg;
+  color: $cream;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: $cream;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+
+  &:hover {
+    color: $active-accent;
+  }
+}
+
+.spacer {
+  flex: 1;
+}
+
+.desktop-nav a,
+.desktop-nav button {
+  color: $cream;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+
+  &.active-link {
+    color: $active-accent;
+    border-bottom: 2px solid $active-accent;
+    border-radius: 0;
+  }
+}
+
+.auth-btn {
+  mat-icon {
+    font-size: 18px;
+    height: 18px;
+    width: 18px;
+    margin-right: 4px;
+  }
+}
+
+.mobile-menu-btn {
+  display: none;
+  color: $cream;
+}
+
+// Responsive: hide desktop nav, show hamburger
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: inline-flex;
+  }
+}
