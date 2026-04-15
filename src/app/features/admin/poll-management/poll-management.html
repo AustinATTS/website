@@ -1,0 +1,122 @@
+<div class="management-header">
+  <h1 class="page-title">
+    Poll Management
+    <span class="title-decoration">📊</span>
+  </h1>
+  <button mat-raised-button class="new-btn" (click)="openNewForm()">
+    <mat-icon>add</mat-icon>
+    New Poll
+  </button>
+</div>
+
+@if (showForm()) {
+  <mat-card class="form-card">
+    <h2 class="form-title">{{ editingPoll() ? 'Edit Poll' : 'New Poll' }}</h2>
+    <form [formGroup]="pollForm" (ngSubmit)="savePoll()" class="poll-form">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title" />
+        @if (pollForm.get('title')?.hasError('required') && pollForm.get('title')?.touched) {
+          <mat-error>Title is required</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" rows="2"></textarea>
+        @if (pollForm.get('description')?.hasError('required') && pollForm.get('description')?.touched) {
+          <mat-error>Description is required</mat-error>
+        }
+      </mat-form-field>
+
+      <div class="options-section">
+        <p class="options-label">Options (minimum 2)</p>
+        <div formArrayName="options">
+          @for (option of optionsArray.controls; track $index) {
+            <div class="option-row">
+              <mat-form-field appearance="outline" class="option-field">
+                <mat-label>Option {{ $index + 1 }}</mat-label>
+                <input matInput [formControlName]="$index" />
+                @if (option.hasError('required') && option.touched) {
+                  <mat-error>Option text is required</mat-error>
+                }
+              </mat-form-field>
+              <button mat-icon-button type="button" (click)="removeOption($index)" [disabled]="optionsArray.length <= 2" aria-label="Remove option">
+                <mat-icon>remove_circle_outline</mat-icon>
+              </button>
+            </div>
+          }
+        </div>
+        <button mat-stroked-button type="button" class="add-option-btn" (click)="addOption()">
+          <mat-icon>add</mat-icon>
+          Add Option
+        </button>
+      </div>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Ends At (optional, ISO date e.g. 2025-12-31)</mat-label>
+        <input matInput formControlName="endsAt" />
+      </mat-form-field>
+
+      <div class="form-actions">
+        @if (errorMessage()) {
+          <p class="form-error">{{ errorMessage() }}</p>
+        }
+        <button mat-raised-button class="save-btn" type="submit" [disabled]="saving()">
+          <mat-icon>save</mat-icon>
+          {{ saving() ? 'Saving…' : (editingPoll() ? 'Update Poll' : 'Create Poll') }}
+        </button>
+        <button mat-stroked-button class="cancel-btn" type="button" (click)="cancelForm()">Cancel</button>
+      </div>
+    </form>
+  </mat-card>
+}
+
+@if (polls().length === 0) {
+  <div class="empty-state">
+    <mat-icon class="empty-icon">poll</mat-icon>
+    <p>No polls yet. Create your first poll!</p>
+  </div>
+} @else {
+  <div class="table-wrapper">
+    <div class="table-header">
+      <span class="col-title">Title</span>
+      <span class="col-author">Author</span>
+      <span class="col-options">Options</span>
+      <span class="col-status">Status</span>
+      <span class="col-date">Date</span>
+      <span class="col-actions">Actions</span>
+    </div>
+
+    @for (poll of polls(); track poll.id) {
+      <mat-card class="table-row">
+        <span class="col-title">{{ poll.title }}</span>
+        <span class="col-author">{{ poll.author }}</span>
+        <span class="col-options">{{ poll.options.length }}</span>
+        <span class="col-status">
+          <span class="status-badge" [class.status-open]="!poll.closed" [class.status-closed]="poll.closed">
+            {{ poll.closed ? 'Closed' : 'Open' }}
+          </span>
+          @if (poll.hidden) {
+            <span class="status-badge status-hidden">Hidden</span>
+          }
+        </span>
+        <span class="col-date">{{ poll.createdAt | date:'mediumDate' }}</span>
+        <span class="col-actions">
+          <button mat-icon-button class="action-edit" (click)="openEditForm(poll)" aria-label="Edit poll">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button class="action-toggle" (click)="toggleClosed(poll)" [attr.aria-label]="poll.closed ? 'Reopen poll' : 'Close poll'">
+            <mat-icon>{{ poll.closed ? 'lock_open' : 'lock' }}</mat-icon>
+          </button>
+          <button mat-icon-button class="action-hide" (click)="toggleHidden(poll)" [attr.aria-label]="poll.hidden ? 'Show poll' : 'Hide poll'">
+            <mat-icon>{{ poll.hidden ? 'visibility' : 'visibility_off' }}</mat-icon>
+          </button>
+          <button mat-icon-button class="action-delete" (click)="deletePoll(poll.id)" aria-label="Delete poll">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </span>
+      </mat-card>
+    }
+  </div>
+}

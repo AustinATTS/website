@@ -1,0 +1,233 @@
+.management-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  color: var(--bread-dark-toast);
+  margin: 0;
+
+  .title-decoration {
+    display: inline-block;
+    margin-left: 0.5rem;
+    animation: wiggle 2s ease-in-out infinite;
+  }
+}
+
+.new-btn {
+  background-color: var(--bread-golden-crust) !important;
+  color: #fff !important;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+.form-card {
+  margin-bottom: 2rem;
+  border-radius: 12px;
+  border: 1px solid var(--bread-border);
+  background-color: var(--bread-surface);
+  padding: 1.5rem;
+}
+
+.form-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--bread-dark-toast);
+  margin: 0 0 1.25rem;
+}
+
+.poll-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.form-field {
+  width: 100%;
+}
+
+.options-section {
+  margin: 0.5rem 0;
+}
+
+.options-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--bread-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0 0 0.75rem;
+}
+
+.option-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.option-field {
+  flex: 1;
+}
+
+.add-option-btn {
+  margin-top: 0.5rem;
+  border-radius: 8px;
+  border-color: var(--bread-golden-crust);
+  color: var(--bread-golden-crust);
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.form-error {
+  color: #c0392b;
+  font-size: 0.9rem;
+  margin: 0;
+  flex: 1 1 100%;
+}
+
+.save-btn {
+  background-color: var(--bread-golden-crust) !important;
+  color: #fff !important;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+.cancel-btn {
+  border-radius: 8px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: var(--bread-text-secondary);
+
+  .empty-icon {
+    font-size: 3rem;
+    width: 3rem;
+    height: 3rem;
+    color: var(--bread-warm-wheat);
+    margin-bottom: 1rem;
+  }
+
+  p { font-size: 1.1rem; }
+}
+
+.table-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 80px 90px 1fr 110px;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--bread-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 80px 90px 1fr 110px;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.85rem 1.25rem;
+  border-radius: 10px;
+  border: 1px solid var(--bread-border);
+  background-color: var(--bread-surface);
+  transition: box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 2px 12px var(--bread-shadow);
+  }
+}
+
+.col-title {
+  font-weight: 600;
+  color: var(--bread-dark-toast);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.col-author,
+.col-date {
+  font-size: 0.9rem;
+  color: var(--bread-text-secondary);
+}
+
+.col-options {
+  font-weight: 600;
+  color: var(--bread-dark-toast);
+  text-align: center;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+
+  &.status-open {
+    background-color: rgba(39, 174, 96, 0.12);
+    color: #27ae60;
+  }
+
+  &.status-closed {
+    background-color: rgba(192, 57, 43, 0.12);
+    color: #c0392b;
+  }
+
+  &.status-hidden {
+    background-color: rgba(149, 165, 166, 0.18);
+    color: #7f8c8d;
+    margin-left: 0.35rem;
+  }
+}
+
+.col-actions {
+  display: flex;
+  gap: 0.1rem;
+  justify-content: flex-end;
+}
+
+.action-edit mat-icon { color: var(--bread-honey-accent); }
+.action-toggle mat-icon { color: var(--bread-warm-wheat); }
+.action-hide mat-icon { color: #7f8c8d; }
+.action-delete mat-icon { color: #c0392b; }
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(8deg); }
+  75% { transform: rotate(-8deg); }
+}
+
+@media (max-width: 768px) {
+  .page-title { font-size: 1.75rem; }
+  .table-header { display: none; }
+
+  .table-row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .col-actions { justify-content: flex-start; }
+}
