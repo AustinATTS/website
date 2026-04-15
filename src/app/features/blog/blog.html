@@ -1,0 +1,100 @@
+<section class="blog-header">
+  <div class="section-container">
+    <h1 class="page-title">
+      The Breadboard
+      <span class="title-decoration">🍞</span>
+    </h1>
+    <p class="blog-subtitle">Thoughts, tutorials, and tales from the bread-themed developer life.</p>
+
+    @if (auth.isAdmin()) {
+      <button mat-raised-button class="new-post-btn" (click)="openNewForm()">
+        <mat-icon>add</mat-icon>
+        New Post
+      </button>
+    }
+  </div>
+</section>
+
+@if (showForm()) {
+  <section class="blog-form-section">
+    <div class="section-container">
+      <mat-card class="form-card">
+        <h2 class="form-title">Create New Post</h2>
+        <form [formGroup]="postForm" (ngSubmit)="savePost()" class="post-form">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="title" />
+            @if (postForm.get('title')?.hasError('required') && postForm.get('title')?.touched) {
+              <mat-error>Title is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Excerpt</mat-label>
+            <textarea matInput formControlName="excerpt" rows="2"></textarea>
+            @if (postForm.get('excerpt')?.hasError('required') && postForm.get('excerpt')?.touched) {
+              <mat-error>Excerpt is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Content</mat-label>
+            <textarea matInput formControlName="content" rows="10"></textarea>
+            @if (postForm.get('content')?.hasError('required') && postForm.get('content')?.touched) {
+              <mat-error>Content is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Tags (comma-separated)</mat-label>
+            <input matInput formControlName="tags" placeholder="angular, firebase, tutorial" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Image URL (optional)</mat-label>
+            <input matInput formControlName="imageUrl" />
+          </mat-form-field>
+
+          <div class="form-actions">
+            @if (errorMessage()) {
+              <p class="form-error">{{ errorMessage() }}</p>
+            }
+            <button mat-raised-button class="save-btn" type="submit" [disabled]="saving()">
+              <mat-icon>save</mat-icon>
+              {{ saving() ? 'Creating…' : 'Create Post' }}
+            </button>
+            <button mat-stroked-button class="cancel-btn" type="button" (click)="cancelForm()">Cancel</button>
+          </div>
+        </form>
+      </mat-card>
+    </div>
+  </section>
+}
+
+<section class="blog-content">
+  <div class="section-container">
+    <div class="tag-filters">
+      @for (tag of allTags(); track tag) {
+        <button
+          class="tag-chip"
+          [class.active]="selectedTag() === tag"
+          (click)="selectTag(tag)">
+          #{{ tag }}
+        </button>
+      }
+      @if (selectedTag()) {
+        <button class="tag-chip clear-chip" (click)="selectTag(null)">
+          ✕ Clear
+        </button>
+      }
+    </div>
+
+    <div class="blog-grid">
+      @for (post of filteredPosts(); track post.id) {
+        <app-blog-card [post]="post" />
+      } @empty {
+        <p class="empty-state">No posts found for this tag. Try another filter!</p>
+      }
+    </div>
+  </div>
+</section>
