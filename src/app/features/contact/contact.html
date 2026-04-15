@@ -1,0 +1,130 @@
+<section class="contact-header">
+  <div class="section-container">
+    <h1 class="page-title">
+      Get in Touch
+      <span class="title-decoration">🍞</span>
+    </h1>
+    <p class="contact-subtitle">Got a question, a project idea, or just want to talk bread? Reach out!</p>
+  </div>
+</section>
+
+<section class="contact-info">
+  <div class="section-container">
+    <h2 class="section-heading">Contact Info</h2>
+    <div class="contact-grid">
+      @for (link of contactLinks; track link.label) {
+        <mat-card appearance="outlined" class="contact-card">
+          <mat-card-content>
+            <mat-icon class="contact-icon">{{ link.icon }}</mat-icon>
+            <h3>{{ link.label }}</h3>
+            @if (link.href) {
+              <a [href]="link.href" target="_blank" rel="noopener noreferrer">{{ link.value }}</a>
+            } @else {
+              <span class="contact-value">{{ link.value }}</span>
+            }
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="contact-websites">
+  <div class="section-container">
+    <h2 class="section-heading">Websites</h2>
+    <div class="websites-grid">
+      @for (site of websites; track site.url) {
+        <mat-card appearance="outlined" class="website-card">
+          <mat-card-content>
+            <mat-icon class="website-icon">language</mat-icon>
+            <h3>{{ site.label }}</h3>
+            <a [href]="site.url" target="_blank" rel="noopener noreferrer">{{ site.display }}</a>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="contact-form-section">
+  <div class="section-container">
+    <mat-card appearance="outlined" class="form-card">
+      <mat-card-header>
+        <mat-icon matCardAvatar>mail</mat-icon>
+        <mat-card-title>Send a Message</mat-card-title>
+        <mat-card-subtitle>Drop me a message - I'd love to hear from you</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        @if (sent()) {
+          <div class="success-message">
+            <mat-icon class="success-icon">check_circle</mat-icon>
+            <h3>Message Sent!</h3>
+            <p>Thanks for reaching out. I'll get back to you as soon as I can.</p>
+            <button mat-stroked-button (click)="sent.set(false)" class="send-another-btn">
+              Send Another Message
+            </button>
+          </div>
+        } @else {
+          <form [formGroup]="contactForm" (ngSubmit)="submitForm()" class="contact-form">
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name" placeholder="Your name">
+                <mat-icon matPrefix>person</mat-icon>
+                @if (contactForm.get('name')?.hasError('required') && contactForm.get('name')?.touched) {
+                  <mat-error>Name is required</mat-error>
+                }
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" placeholder="your@email.com">
+                <mat-icon matPrefix>email</mat-icon>
+                @if (contactForm.get('email')?.hasError('required') && contactForm.get('email')?.touched) {
+                  <mat-error>Email is required</mat-error>
+                } @else if (contactForm.get('email')?.hasError('email') && contactForm.get('email')?.touched) {
+                  <mat-error>Please enter a valid email</mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Subject</mat-label>
+              <input matInput formControlName="subject" placeholder="What's this about?">
+              <mat-icon matPrefix>subject</mat-icon>
+              @if (contactForm.get('subject')?.hasError('required') && contactForm.get('subject')?.touched) {
+                <mat-error>Subject is required</mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Message</mat-label>
+              <textarea matInput formControlName="message" rows="5" placeholder="Tell me more..."></textarea>
+              <mat-icon matPrefix>chat</mat-icon>
+              @if (contactForm.get('message')?.hasError('required') && contactForm.get('message')?.touched) {
+                <mat-error>Message is required</mat-error>
+              }
+            </mat-form-field>
+            @if (errorMessage()) {
+              <p class="form-error">
+                <mat-icon>error</mat-icon>
+                {{ errorMessage() }}
+              </p>
+            }
+            <button mat-raised-button type="submit" [disabled]="sending()" class="send-button">
+              <mat-icon>send</mat-icon>
+              {{ sending() ? 'Sending…' : 'Send Message' }}
+            </button>
+          </form>
+        }
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>
+
+<section class="contact-bread-decoration">
+  <div class="bread-divider">
+    <span>🍞</span>
+    <span>🥖</span>
+    <span>🥐</span>
+    <span>🍞</span>
+    <span>🥖</span>
+  </div>
+</section>
