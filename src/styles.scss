@@ -1,0 +1,243 @@
+@use '@angular/material' as mat;
+
+html {
+  height: 100%;
+
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$orange-palette,
+        tertiary: mat.$yellow-palette,
+      ),
+      typography: (
+        plain-family: 'Inter, sans-serif',
+        brand-family: 'Playfair Display, serif',
+      ),
+      density: 0,
+    )
+  );
+}
+
+:root {
+  --bread-golden-crust: #D4A574;
+  --bread-dark-toast: #5C3317;
+  --bread-warm-wheat: #C19A6B;
+  --bread-cream-dough: #FFF8DC;
+  --bread-light-flour: #FAEBD7;
+  --bread-deep-rye: #3E2723;
+  --bread-honey-accent: #F5A623;
+  --bread-butter: #FFD700;
+
+  --bread-bg: var(--bread-cream-dough);
+  --bread-bg-alt: var(--bread-light-flour);
+  --bread-surface: #FFFFFF;
+  --bread-text: var(--bread-deep-rye);
+  --bread-text-secondary: var(--bread-dark-toast);
+  --bread-border: rgba(193, 154, 107, 0.3);
+  --bread-shadow: rgba(62, 39, 35, 0.12);
+
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not(.light) {
+    --bread-bg: #2C1B0E;
+    --bread-bg-alt: var(--bread-deep-rye);
+    --bread-surface: #3A2518;
+    --bread-text: var(--bread-light-flour);
+    --bread-text-secondary: var(--bread-golden-crust);
+    --bread-border: rgba(212, 165, 116, 0.25);
+    --bread-shadow: rgba(0, 0, 0, 0.35);
+  }
+}
+
+html.dark {
+  --bread-bg: #2C1B0E;
+  --bread-bg-alt: var(--bread-deep-rye);
+  --bread-surface: #3A2518;
+  --bread-text: var(--bread-light-flour);
+  --bread-text-secondary: var(--bread-golden-crust);
+  --bread-border: rgba(212, 165, 116, 0.25);
+  --bread-shadow: rgba(0, 0, 0, 0.35);
+
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$orange-palette,
+        tertiary: mat.$yellow-palette,
+        theme-type: dark,
+      ),
+      typography: (
+        plain-family: 'Inter, sans-serif',
+        brand-family: 'Playfair Display, serif',
+      ),
+      density: 0,
+    )
+  );
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  color-scheme: light dark;
+
+  background-color: var(--bread-bg);
+  color: var(--bread-text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+
+  margin: 0;
+  height: 100%;
+
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(193, 154, 107, 0.03) 2px,
+      rgba(193, 154, 107, 0.03) 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(212, 165, 116, 0.02) 2px,
+      rgba(212, 165, 116, 0.02) 4px
+    ),
+    radial-gradient(
+      ellipse at 20% 50%,
+      rgba(245, 166, 35, 0.04) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse at 80% 20%,
+      rgba(255, 215, 0, 0.03) 0%,
+      transparent 50%
+    );
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--bread-dark-toast);
+  line-height: 1.25;
+  margin-top: 0;
+}
+
+h1 { font-size: 2.5rem; font-weight: 700; }
+h2 { font-size: 2rem;   font-weight: 700; }
+h3 { font-size: 1.5rem; font-weight: 600; }
+h4 { font-size: 1.25rem; font-weight: 600; }
+
+a {
+  color: var(--bread-honey-accent);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+
+  &:hover {
+    color: var(--bread-dark-toast);
+    text-decoration: underline;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bread-light-flour);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bread-warm-wheat);
+  border-radius: 5px;
+  border: 2px solid var(--bread-light-flour);
+
+  &:hover {
+    background: var(--bread-golden-crust);
+  }
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--bread-warm-wheat) var(--bread-light-flour);
+}
+
+.bg-crust    { background-color: var(--bread-golden-crust) !important; }
+.bg-toast    { background-color: var(--bread-dark-toast) !important; }
+.bg-wheat    { background-color: var(--bread-warm-wheat) !important; }
+.bg-dough    { background-color: var(--bread-cream-dough) !important; }
+.bg-flour    { background-color: var(--bread-light-flour) !important; }
+.bg-rye      { background-color: var(--bread-deep-rye) !important; }
+.bg-honey    { background-color: var(--bread-honey-accent) !important; }
+.bg-butter   { background-color: var(--bread-butter) !important; }
+
+.text-crust  { color: var(--bread-golden-crust) !important; }
+.text-toast  { color: var(--bread-dark-toast) !important; }
+.text-wheat  { color: var(--bread-warm-wheat) !important; }
+.text-dough  { color: var(--bread-cream-dough) !important; }
+.text-flour  { color: var(--bread-light-flour) !important; }
+.text-rye    { color: var(--bread-deep-rye) !important; }
+.text-honey  { color: var(--bread-honey-accent) !important; }
+.text-butter { color: var(--bread-butter) !important; }
+
+.bread-card {
+  background-color: var(--bread-surface);
+  border: 1px solid var(--bread-border);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px var(--bread-shadow);
+  padding: 1.5rem;
+  transition: box-shadow var(--transition-base), transform var(--transition-base);
+
+  &:hover {
+    box-shadow: 0 6px 20px var(--bread-shadow);
+    transform: translateY(-2px);
+  }
+}
+
+.bread-gradient {
+  background: linear-gradient(135deg, var(--bread-golden-crust), var(--bread-warm-wheat));
+}
+
+.bread-gradient-dark {
+  background: linear-gradient(135deg, var(--bread-dark-toast), var(--bread-deep-rye));
+}
+
+.bread-section {
+  background-color: var(--bread-bg-alt);
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+.font-display { font-family: var(--font-display) !important; }
+.font-body    { font-family: var(--font-body) !important; }
+
+:focus-visible {
+  outline: 2px solid var(--bread-honey-accent);
+  outline-offset: 2px;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
