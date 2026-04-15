@@ -1,0 +1,83 @@
+<section class="hero">
+  <div class="hero-decoration">
+    <span class="wheat-left">🌾</span>
+    <span class="wheat-right">🌾</span>
+  </div>
+  <div class="hero-content">
+    <div class="bread-float">🍞</div>
+    <h1 class="hero-title">Austin Welsh-Graham</h1>
+    <p class="hero-subtitle">Developer & Bread Enthusiast</p>
+    <p class="hero-tagline">
+      Software developer at All Things Toasty Software Ltd. Building tools,
+      baking bread, and writing code.
+    </p>
+    <div class="hero-actions">
+      <a mat-flat-button routerLink="/projects" class="cta-primary">
+        <mat-icon>code</mat-icon>
+        View My Projects
+      </a>
+      <a mat-stroked-button routerLink="/about" class="cta-secondary">
+        <mat-icon>person</mat-icon>
+        About Me
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="featured-projects">
+  <div class="section-container">
+    <h2 class="section-title">
+      <mat-icon class="section-icon">star</mat-icon>
+      Featured Projects
+    </h2>
+    <div class="projects-grid">
+      @for (project of featuredProjects; track project.name) {
+        <app-project-card [project]="project" />
+      }
+    </div>
+    <div class="section-footer">
+      <a mat-flat-button routerLink="/projects" class="view-all-btn">
+        View All Projects
+        <mat-icon>arrow_forward</mat-icon>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="quick-about">
+  <div class="section-container">
+    <div class="about-content">
+      <div class="about-avatar">🍞</div>
+      <div class="about-text">
+        <h2 class="section-title">A Little About Me</h2>
+        <p>
+          I'm Austin, a British software developer who likes bread.
+        </p>
+        <a mat-stroked-button routerLink="/about" class="about-link">
+          Learn More About Me
+          <mat-icon>arrow_forward</mat-icon>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="latest-blog">
+  <div class="section-container">
+    <h2 class="section-title">
+      <mat-icon class="section-icon">article</mat-icon>
+      Latest from the Blog
+    </h2>
+    <div class="blog-grid">
+      @for (post of latestPosts; track post.id) {
+        <app-blog-card [post]="post" />
+      }
+    </div>
+    <div class="section-footer">
+      <a mat-flat-button routerLink="/blog" class="view-all-btn">
+        Read the Blog
+        <mat-icon>arrow_forward</mat-icon>
+      </a>
+    </div>
+  </div>
+</section>

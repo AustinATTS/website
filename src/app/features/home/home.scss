@@ -1,0 +1,227 @@
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    var(--bread-deep-rye) 0%,
+    var(--bread-dark-toast) 50%,
+    var(--bread-warm-wheat) 100%
+  );
+  color: var(--bread-cream-dough);
+  padding: 6rem 2rem 5rem;
+  text-align: center;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-decoration {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  .wheat-left,
+  .wheat-right {
+    position: absolute;
+    font-size: 4rem;
+    opacity: 0.15;
+    animation: sway 6s ease-in-out infinite;
+  }
+
+  .wheat-left {
+    top: 20%;
+    left: 5%;
+  }
+
+  .wheat-right {
+    bottom: 15%;
+    right: 5%;
+    animation-delay: -3s;
+  }
+}
+
+.hero-content {
+  max-width: 720px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.bread-float {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  animation: float 3s ease-in-out infinite;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--bread-cream-dough);
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  color: var(--bread-golden-crust);
+  margin: 0 0 1.5rem;
+  font-weight: 500;
+}
+
+.hero-tagline {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--bread-light-flour);
+  margin: 0 0 2.5rem;
+  opacity: 0.9;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  .cta-primary {
+    background-color: var(--bread-honey-accent) !important;
+    color: var(--bread-deep-rye) !important;
+    font-weight: 600;
+  }
+
+  .cta-secondary {
+    border-color: var(--bread-golden-crust) !important;
+    color: var(--bread-golden-crust) !important;
+  }
+}
+
+.section-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--bread-dark-toast);
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .section-icon {
+    color: var(--bread-honey-accent);
+  }
+}
+
+.section-footer {
+  text-align: center;
+  margin-top: 2.5rem;
+
+  .view-all-btn {
+    background-color: var(--bread-golden-crust) !important;
+    color: var(--bread-deep-rye) !important;
+    font-weight: 600;
+  }
+}
+
+.featured-projects {
+  padding: 5rem 2rem;
+  background-color: var(--bread-bg);
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.quick-about {
+  padding: 5rem 2rem;
+  background-color: var(--bread-bg-alt);
+}
+
+.about-content {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.about-avatar {
+  font-size: 5rem;
+  flex-shrink: 0;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    135deg,
+    var(--bread-golden-crust),
+    var(--bread-warm-wheat)
+  );
+  border-radius: 50%;
+}
+
+.about-text {
+  p {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--bread-text-secondary);
+    margin: 0 0 1.5rem;
+  }
+
+  .about-link {
+    border-color: var(--bread-golden-crust) !important;
+    color: var(--bread-dark-toast) !important;
+  }
+}
+
+.latest-blog {
+  padding: 5rem 2rem;
+  background-color: var(--bread-bg);
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 4rem 1.5rem 3rem;
+    min-height: auto;
+  }
+
+  .hero-title {
+    font-size: 2.25rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .about-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+}
