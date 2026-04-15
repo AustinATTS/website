@@ -1,0 +1,113 @@
+.about-intro {
+  padding: 5rem 2rem 3rem;
+  text-align: center;
+  background: linear-gradient(180deg, var(--bread-bg-alt), var(--bread-bg));
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  color: var(--bread-dark-toast);
+  margin-bottom: 2rem;
+  .title-decoration {
+    display: inline-block;
+    margin-left: 0.5rem;
+    animation: wiggle 2s ease-in-out infinite;
+  }
+}
+
+.profile-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.avatar-wrapper {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--bread-golden-crust), var(--bread-warm-wheat));
+  box-shadow: 0 8px 32px var(--bread-shadow);
+  .avatar-bread { font-size: 4.5rem; }
+}
+
+.intro-text {
+  font-size: 1.25rem;
+  color: var(--bread-text-secondary);
+  max-width: 600px;
+  line-height: 1.7;
+}
+
+.section-container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+
+.about-person, .about-bread, .about-skills, .about-links { padding: 2.5rem 2rem; }
+.about-person, .about-skills { background-color: var(--bread-bg); }
+.about-bread, .about-links { background-color: var(--bread-bg-alt); }
+.about-links { padding-bottom: 5rem; }
+
+.about-card {
+  mat-card-content { padding-top: 1rem; }
+  p { font-size: 1.05rem; line-height: 1.8; color: var(--bread-text); margin-bottom: 1rem; }
+  h4 { color: var(--bread-dark-toast); margin-bottom: 0.75rem; }
+}
+
+.person-details {
+  list-style: none; padding: 0; margin: 0;
+  li {
+    padding: 0.6rem 0 0.6rem 1.5rem;
+    position: relative; font-size: 1.05rem; color: var(--bread-text);
+    border-bottom: 1px solid var(--bread-border);
+    &:last-child { border-bottom: none; }
+    &::before { content: '🍞'; position: absolute; left: 0; font-size: 0.85rem; }
+  }
+}
+
+.bread-card-themed { border-left: 4px solid var(--bread-honey-accent) !important; }
+
+.bread-projects {
+  margin: 1.5rem 0; padding: 1.25rem;
+  background-color: var(--bread-bg); border-radius: 8px;
+  ul {
+    list-style: none; padding: 0; margin: 0;
+    li {
+      padding: 0.5rem 0 0.5rem 1.5rem; position: relative; line-height: 1.6;
+      &::before { content: '🥖'; position: absolute; left: 0; font-size: 0.85rem; }
+      a { color: var(--bread-honey-accent); text-decoration: underline; }
+    }
+  }
+}
+
+.bread-philosophy {
+  font-style: italic; text-align: center; padding: 1rem; margin-top: 1.5rem;
+  background: rgba(212, 165, 116, 0.08); border-radius: 8px;
+}
+
+.skills-group { margin-bottom: 1.5rem; &:last-child { margin-bottom: 0; } }
+
+.links-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+
+.link-item {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.75rem 1rem; background-color: var(--bread-bg); border-radius: 8px;
+  transition: transform var(--transition-fast);
+  &:hover { transform: translateY(-2px); }
+  mat-icon { color: var(--bread-honey-accent); flex-shrink: 0; }
+  a { color: var(--bread-dark-toast); font-weight: 500; &:hover { color: var(--bread-honey-accent); } }
+  .link-display { color: var(--bread-text); font-weight: 500; }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(8deg); }
+  75% { transform: rotate(-8deg); }
+}
+
+@media (max-width: 768px) {
+  .page-title { font-size: 2.25rem; }
+  .avatar-wrapper { width: 110px; height: 110px; .avatar-bread { font-size: 3.5rem; } }
+  .links-grid { grid-template-columns: 1fr; }
+}

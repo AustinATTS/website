@@ -1,0 +1,149 @@
+<section class="about-intro">
+  <div class="section-container">
+    <h1 class="page-title">
+      About Me
+      <span class="title-decoration">🍞</span>
+    </h1>
+    <div class="profile-area">
+      <div class="avatar-wrapper">
+        <span class="avatar-bread">🍞</span>
+      </div>
+      <p class="intro-text">
+        Hi, I'm Austin, that one British guy who likes bread.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="about-person">
+  <div class="section-container">
+    <mat-card appearance="outlined" class="about-card">
+      <mat-card-header>
+        <mat-icon matCardAvatar>person</mat-icon>
+        <mat-card-title>TMe</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ul class="person-details">
+          <li>Software developer based in the UK</li>
+          <li>Works at <strong>All Things Toasty Software Ltd</strong></li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>
+
+<section class="about-bread">
+  <div class="section-container">
+    <mat-card appearance="outlined" class="about-card bread-card-themed">
+      <mat-card-header>
+        <mat-icon matCardAvatar>bakery_dining</mat-icon>
+        <mat-card-title>The Bread Obsession</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          My love of bread isn't just a quirk, it's my lifestyle. From naming my
+          projects after bread (Split Loaf, Bread Bin, Breadsay, Breadfetch) to
+          theming my entire digital presence around warm toast tones, bread is
+          woven into everything I do.
+        </p>
+        <div class="bread-projects">
+          <h4>Bread-Themed Creations:</h4>
+          <ul>
+            <li>
+              <strong>The Baker's Archive</strong> - a recipe cataloguing web app
+              at
+              <a href="https://archive.austinatts.co.uk" target="_blank" rel="noopener noreferrer">
+                archive.austinatts.co.uk
+              </a>
+            </li>
+            <li>
+              <strong>voicemeeter-bread</strong> - a collection of bread-themed
+              Voicemeeter skins using Voicemeeter Chroma
+            </li>
+          </ul>
+        </div>
+        <p class="bread-philosophy">
+          "Good software, like good sourdough, needs time to rise. You can't
+          rush the process - you just have to trust the starter and let it do its
+          thing." Some smart guy (probably)
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>
+
+<section class="about-skills">
+  <div class="section-container">
+    <mat-card appearance="outlined" class="about-card">
+      <mat-card-header>
+        <mat-icon matCardAvatar>build</mat-icon>
+        <mat-card-title>Skills & Technologies</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="skills-group">
+          <h4>Languages</h4>
+          <mat-chip-set>
+            @for (lang of languages; track lang) {
+              <mat-chip highlighted>{{ lang }}</mat-chip>
+            }
+          </mat-chip-set>
+        </div>
+
+        <div class="skills-group">
+          <h4>Frameworks & SDKs</h4>
+          <mat-chip-set>
+            @for (fw of frameworks; track fw) {
+              <mat-chip highlighted>{{ fw }}</mat-chip>
+            }
+          </mat-chip-set>
+        </div>
+
+        <div class="skills-group">
+          <h4>Tools & Platforms</h4>
+          <mat-chip-set>
+            @for (tool of tools; track tool) {
+              <mat-chip highlighted>{{ tool }}</mat-chip>
+            }
+          </mat-chip-set>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>
+
+<section class="about-links">
+  <div class="section-container">
+    <mat-card appearance="outlined" class="about-card">
+      <mat-card-header>
+        <mat-icon matCardAvatar>link</mat-icon>
+        <mat-card-title>Find Me Online</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="links-grid">
+          @for (link of links; track link.label) {
+            <div class="link-item">
+              <mat-icon>{{ link.icon }}</mat-icon>
+              @if (link.external) {
+                <a [href]="link.url" target="_blank" rel="noopener noreferrer">
+                  {{ link.label }}
+                </a>
+              } @else {
+                <span class="link-display">{{ link.display }}</span>
+              }
+            </div>
+          }
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <a mat-button routerLink="/projects">
+          <mat-icon>code</mat-icon>
+          See My Projects
+        </a>
+        <a mat-button routerLink="/contact">
+          <mat-icon>mail</mat-icon>
+          Get in Touch
+        </a>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</section>
