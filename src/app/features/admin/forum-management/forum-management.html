@@ -1,0 +1,178 @@
+<div class="management-header">
+  <h1 class="page-title">
+    Forum Management
+    <span class="title-decoration">💬</span>
+  </h1>
+</div>
+
+<section class="categories-section">
+  <div class="section-header">
+    <h2 class="section-heading">Categories</h2>
+    <button mat-raised-button class="new-btn" (click)="openNewCategoryForm()">
+      <mat-icon>add</mat-icon>
+      New Category
+    </button>
+  </div>
+
+  @if (showCategoryForm()) {
+    <mat-card class="form-card">
+      <h3 class="form-title">{{ editingCategory() ? 'Edit Category' : 'New Category' }}</h3>
+      <form [formGroup]="categoryForm" (ngSubmit)="saveCategory()" class="inline-form">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" />
+          @if (categoryForm.get('name')?.hasError('required') && categoryForm.get('name')?.touched) {
+            <mat-error>Name is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description" rows="2"></textarea>
+          @if (categoryForm.get('description')?.hasError('required') && categoryForm.get('description')?.touched) {
+            <mat-error>Description is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Material Icon Name</mat-label>
+          <input matInput formControlName="icon" placeholder="e.g. forum, code, help" />
+          @if (categoryForm.get('icon')?.hasError('required') && categoryForm.get('icon')?.touched) {
+            <mat-error>Icon is required</mat-error>
+          }
+          @if (categoryForm.get('icon')?.value) {
+            <mat-hint>Preview: <mat-icon class="icon-preview">{{ categoryForm.get('icon')?.value }}</mat-icon></mat-hint>
+          }
+        </mat-form-field>
+
+        <div class="form-actions">
+          @if (categoryError()) {
+            <p class="form-error">{{ categoryError() }}</p>
+          }
+          <button mat-raised-button class="save-btn" type="submit" [disabled]="savingCategory()">
+            <mat-icon>save</mat-icon>
+            {{ savingCategory() ? 'Saving…' : (editingCategory() ? 'Update' : 'Create') }}
+          </button>
+          <button mat-stroked-button class="cancel-btn" type="button" (click)="cancelCategoryForm()">Cancel</button>
+        </div>
+      </form>
+    </mat-card>
+  }
+
+  <div class="categories-grid">
+    @for (category of categories(); track category.id) {
+      <mat-card class="category-card">
+        <mat-card-content>
+          <mat-icon class="category-icon">{{ category.icon }}</mat-icon>
+          <div class="category-info">
+            <span class="category-name">{{ category.name }}</span>
+            <span class="category-count">{{ category.threadCount }} threads</span>
+          </div>
+          <div class="category-actions">
+            <button mat-icon-button class="action-edit" (click)="openEditCategoryForm(category)" aria-label="Edit category">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button class="action-delete" (click)="deleteCategory(category.id)" aria-label="Delete category">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+</section>
+
+<section class="threads-section">
+  <div class="section-header">
+    <h2 class="section-heading">All Threads</h2>
+    <button mat-raised-button class="new-btn" (click)="openNewThreadForm()">
+      <mat-icon>add</mat-icon>
+      New Thread
+    </button>
+  </div>
+
+  @if (showThreadForm()) {
+    <mat-card class="form-card">
+      <h3 class="form-title">New Thread</h3>
+      <form [formGroup]="threadForm" (ngSubmit)="saveThread()" class="inline-form">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title" />
+          @if (threadForm.get('title')?.hasError('required') && threadForm.get('title')?.touched) {
+            <mat-error>Title is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Category</mat-label>
+          <mat-select formControlName="categoryId">
+            @for (cat of categories(); track cat.id) {
+              <mat-option [value]="cat.id">{{ cat.name }}</mat-option>
+            }
+          </mat-select>
+          @if (threadForm.get('categoryId')?.hasError('required') && threadForm.get('categoryId')?.touched) {
+            <mat-error>Category is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Content (first post)</mat-label>
+          <textarea matInput formControlName="content" rows="5"></textarea>
+          @if (threadForm.get('content')?.hasError('required') && threadForm.get('content')?.touched) {
+            <mat-error>Content is required</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="form-actions">
+          @if (threadError()) {
+            <p class="form-error">{{ threadError() }}</p>
+          }
+          <button mat-raised-button class="save-btn" type="submit" [disabled]="savingThread()">
+            <mat-icon>save</mat-icon>
+            {{ savingThread() ? 'Creating…' : 'Create Thread' }}
+          </button>
+          <button mat-stroked-button class="cancel-btn" type="button" (click)="cancelThreadForm()">Cancel</button>
+        </div>
+      </form>
+    </mat-card>
+  }
+
+  @if (threads().length === 0) {
+    <div class="empty-state">
+      <mat-icon class="empty-icon">forum</mat-icon>
+      <p>No forum threads found.</p>
+    </div>
+  } @else {
+    <div class="table-wrapper">
+      <div class="table-header">
+        <span class="col-title">Title</span>
+        <span class="col-author">Author</span>
+        <span class="col-category">Category</span>
+        <span class="col-replies">Replies</span>
+        <span class="col-actions">Actions</span>
+      </div>
+
+      @for (thread of threads(); track thread.id) {
+        <mat-card class="table-row">
+          <span class="col-title">
+            @if (thread.pinned) {
+              <mat-icon class="pinned-icon" inline>push_pin</mat-icon>
+            }
+            {{ thread.title }}
+          </span>
+          <span class="col-author">{{ thread.author }}</span>
+          <span class="col-category">{{ getCategoryName(thread.categoryId) }}</span>
+          <span class="col-replies">{{ thread.replyCount }}</span>
+          <span class="col-actions">
+            <button mat-icon-button class="action-pin" (click)="togglePin(thread)" [attr.aria-label]="thread.pinned ? 'Unpin thread' : 'Pin thread'">
+              <mat-icon>{{ thread.pinned ? 'push_pin' : 'keep_off' }}</mat-icon>
+            </button>
+            <button mat-icon-button class="action-delete" (click)="deleteThread(thread.id)" aria-label="Delete thread">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </span>
+        </mat-card>
+      }
+    </div>
+  }
+</section>
