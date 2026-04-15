@@ -1,0 +1,127 @@
+<section class="experience-header">
+  <div class="section-container">
+    <h1 class="page-title">
+      Professional Experience
+      <span class="title-decoration">🍞</span>
+    </h1>
+  </div>
+</section>
+
+<section class="experience-work">
+  <div class="section-container">
+    <div class="timeline">
+
+      <!-- All Things Toasty Software Ltd -->
+      <div class="timeline-item">
+        <div class="timeline-marker">🍞</div>
+        <mat-card appearance="outlined" class="experience-card featured-card">
+          <mat-card-header>
+            <mat-icon matCardAvatar>business</mat-icon>
+            <mat-card-title>Software Developer</mat-card-title>
+            <mat-card-subtitle>All Things Toasty Software Ltd</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p class="role-description">
+              Working on Odoo-based ERP systems, developing custom modules and
+              integrations for business clients.
+            </p>
+
+            <h4>Key Responsibilities</h4>
+            <ul class="responsibilities-list">
+              @for (item of responsibilities; track item) {
+                <li>{{ item }}</li>
+              }
+            </ul>
+
+            <h4>Technologies</h4>
+            <mat-chip-set class="tech-chips">
+              @for (tech of technologies; track tech) {
+                <mat-chip highlighted>{{ tech }}</mat-chip>
+              }
+            </mat-chip-set>
+          </mat-card-content>
+          <mat-card-actions align="end">
+            <a mat-button href="https://www.toastysoftware.co.uk" target="_blank" rel="noopener noreferrer">
+              <mat-icon>language</mat-icon>
+              www.toastysoftware.co.uk
+            </a>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="experience-education">
+  <div class="section-container">
+    <h2 class="section-title">
+      <mat-icon class="section-icon">school</mat-icon>
+      Education
+    </h2>
+
+    <mat-card appearance="outlined" class="experience-card">
+      <mat-card-header>
+        <mat-icon matCardAvatar>school</mat-icon>
+        <mat-card-title>MSci Hons Software Engineering</mat-card-title>
+        <mat-card-subtitle>Lancaster University</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="role-description">
+          Coursework projects that I've worked on:
+        </p>
+        <div class="coursework-grid">
+          @for (project of courseworkProjects; track project.name) {
+            <div class="coursework-item">
+              <span class="coursework-emoji">🥖</span>
+              <div class="coursework-info">
+                <a [href]="project.url" target="_blank" rel="noopener noreferrer" class="coursework-name">
+                  {{ project.name }}
+                </a>
+                <span class="coursework-unit">{{ project.unit }}</span>
+              </div>
+            </div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>
+
+<section class="experience-projects">
+  <div class="section-container">
+    <h2 class="section-title">
+      <mat-icon class="section-icon">code</mat-icon>
+      Personal Projects &amp; Open Source
+    </h2>
+
+    <mat-card appearance="outlined" class="experience-card">
+      <mat-card-header>
+        <mat-icon matCardAvatar>rocket_launch</mat-icon>
+        <mat-card-title>Open Source Contributions</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="role-description">
+          Beyond work, I build and maintain a number of personal open-source projects,
+          many of which are bread-themed (naturally).
+        </p>
+        <ul class="highlights-list">
+          <li>
+            <strong>Split Loaf</strong> - A keyboard redirector for Windows, available on
+            the <a href="https://www.microsoft.com/store/apps/9PMHDS2D4NH6" target="_blank" rel="noopener noreferrer">Microsoft Store</a>
+          </li>
+          <li>
+            <strong>Baker's Archive</strong> - A recipe cataloguing web app at
+            <a href="https://archive.austinatts.co.uk" target="_blank" rel="noopener noreferrer">archive.austinatts.co.uk</a>
+          </li>
+        </ul>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <a mat-flat-button routerLink="/projects" class="view-projects-btn">
+          View All Projects
+          <mat-icon>arrow_forward</mat-icon>
+        </a>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</section>

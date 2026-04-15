@@ -1,0 +1,211 @@
+.experience-header {
+  padding: 5rem 2rem 3rem;
+  text-align: center;
+  background: linear-gradient(180deg, var(--bread-bg-alt), var(--bread-bg));
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  color: var(--bread-dark-toast);
+  margin-bottom: 1rem;
+  .title-decoration {
+    display: inline-block;
+    margin-left: 0.5rem;
+    animation: wiggle 2s ease-in-out infinite;
+  }
+}
+
+.section-container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--bread-dark-toast);
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  .section-icon { color: var(--bread-honey-accent); }
+}
+
+.experience-work {
+  padding: 3rem 2rem;
+  background-color: var(--bread-bg);
+}
+
+.timeline {
+  position: relative;
+  padding-left: 2.5rem;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0.75rem;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--bread-golden-crust), var(--bread-warm-wheat));
+    border-radius: 2px;
+  }
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 2rem;
+  &:last-child { margin-bottom: 0; }
+}
+
+.timeline-marker {
+  position: absolute;
+  left: -2.5rem;
+  top: 1.25rem;
+  width: 1.75rem;
+  height: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  z-index: 1;
+}
+
+.experience-card {
+  mat-card-content { padding-top: 1rem; }
+
+  h4 {
+    color: var(--bread-dark-toast);
+    margin: 1.5rem 0 0.75rem;
+    font-size: 1rem;
+  }
+}
+
+.featured-card {
+  border-left: 4px solid var(--bread-honey-accent) !important;
+}
+
+.role-description {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--bread-text);
+  margin-bottom: 0.5rem;
+}
+
+.responsibilities-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    padding: 0.5rem 0 0.5rem 1.5rem;
+    position: relative;
+    font-size: 1rem;
+    color: var(--bread-text);
+    line-height: 1.6;
+    border-bottom: 1px solid var(--bread-border);
+
+    &:last-child { border-bottom: none; }
+    &::before {
+      content: '🌾';
+      position: absolute;
+      left: 0;
+      font-size: 0.85rem;
+    }
+  }
+}
+
+.tech-chips {
+  margin-top: 0.5rem;
+}
+
+.experience-education {
+  padding: 3rem 2rem;
+  background-color: var(--bread-bg-alt);
+}
+
+.coursework-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.coursework-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background-color: var(--bread-bg);
+  border-radius: 8px;
+  transition: transform var(--transition-fast);
+  &:hover { transform: translateX(4px); }
+}
+
+.coursework-emoji { font-size: 1.25rem; flex-shrink: 0; }
+
+.coursework-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.coursework-name {
+  color: var(--bread-honey-accent);
+  font-weight: 600;
+  text-decoration: none;
+  &:hover { text-decoration: underline; }
+}
+
+.coursework-unit {
+  font-size: 0.85rem;
+  color: var(--bread-text-secondary);
+}
+
+.experience-projects {
+  padding: 3rem 2rem 5rem;
+  background-color: var(--bread-bg);
+}
+
+.highlights-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+
+  li {
+    padding: 0.6rem 0 0.6rem 1.5rem;
+    position: relative;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--bread-text);
+
+    &::before {
+      content: '🍞';
+      position: absolute;
+      left: 0;
+      font-size: 0.85rem;
+    }
+
+    a {
+      color: var(--bread-honey-accent);
+      text-decoration: underline;
+    }
+  }
+}
+
+.view-projects-btn {
+  background-color: var(--bread-golden-crust) !important;
+  color: var(--bread-deep-rye) !important;
+  font-weight: 600;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(8deg); }
+  75% { transform: rotate(-8deg); }
+}
+
+@media (max-width: 768px) {
+  .page-title { font-size: 2.25rem; }
+  .section-title { font-size: 1.5rem; }
+  .timeline { padding-left: 2rem; }
+  .timeline-marker { left: -2rem; }
+}
