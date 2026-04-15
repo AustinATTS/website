@@ -1,0 +1,185 @@
+<section class="polls-header">
+  <div class="section-container">
+    <h1 class="page-title">
+      Polls
+      <span class="title-decoration">📊</span>
+    </h1>
+    <p class="polls-subtitle">Vote on what matters. Your opinion counts!</p>
+
+    @if (auth.isAdmin()) {
+      <button mat-raised-button class="new-poll-btn" (click)="openNewForm()">
+        <mat-icon>add</mat-icon>
+        New Poll
+      </button>
+    }
+  </div>
+</section>
+
+@if (showForm()) {
+  <section class="poll-form-section">
+    <div class="section-container">
+      <mat-card class="form-card">
+        <h2 class="form-title">Create New Poll</h2>
+        <form [formGroup]="pollForm" (ngSubmit)="savePoll()" class="poll-form">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="title" />
+            @if (pollForm.get('title')?.hasError('required') && pollForm.get('title')?.touched) {
+              <mat-error>Title is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" rows="2"></textarea>
+            @if (pollForm.get('description')?.hasError('required') && pollForm.get('description')?.touched) {
+              <mat-error>Description is required</mat-error>
+            }
+          </mat-form-field>
+
+          <div class="options-section">
+            <p class="options-label">Options (minimum 2)</p>
+            <div formArrayName="options">
+              @for (option of optionsArray.controls; track $index) {
+                <div class="option-row">
+                  <mat-form-field appearance="outline" class="option-field">
+                    <mat-label>Option {{ $index + 1 }}</mat-label>
+                    <input matInput [formControlName]="$index" />
+                    @if (option.hasError('required') && option.touched) {
+                      <mat-error>Option text is required</mat-error>
+                    }
+                  </mat-form-field>
+                  <button mat-icon-button type="button" (click)="removeOption($index)" [disabled]="optionsArray.length <= 2" aria-label="Remove option">
+                    <mat-icon>remove_circle_outline</mat-icon>
+                  </button>
+                </div>
+              }
+            </div>
+            <button mat-stroked-button type="button" class="add-option-btn" (click)="addOption()">
+              <mat-icon>add</mat-icon>
+              Add Option
+            </button>
+          </div>
+
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Ends At (optional, ISO date e.g. 2025-12-31)</mat-label>
+            <input matInput formControlName="endsAt" />
+          </mat-form-field>
+
+          <div class="form-actions">
+            @if (errorMessage()) {
+              <p class="form-error">{{ errorMessage() }}</p>
+            }
+            <button mat-raised-button class="save-btn" type="submit" [disabled]="saving()">
+              <mat-icon>save</mat-icon>
+              {{ saving() ? 'Creating…' : 'Create Poll' }}
+            </button>
+            <button mat-stroked-button class="cancel-btn" type="button" (click)="cancelForm()">Cancel</button>
+          </div>
+        </form>
+      </mat-card>
+    </div>
+  </section>
+}
+
+<section class="polls-content">
+  <div class="section-container">
+    <h2 class="section-heading">Current Polls</h2>
+    @if (errorMessage()) {
+      <p class="vote-error">{{ errorMessage() }}</p>
+    }
+    @if (currentPolls().length === 0) {
+      <p class="empty-state">No active polls right now. Check back soon!</p>
+    } @else {
+      <div class="polls-grid">
+        @for (poll of currentPolls(); track poll.id) {
+          <mat-card appearance="outlined" class="poll-card">
+            <mat-card-header>
+              <mat-icon matCardAvatar>poll</mat-icon>
+              <mat-card-title>{{ poll.title }}</mat-card-title>
+              <mat-card-subtitle>by {{ poll.author }} · {{ poll.createdAt | date:'mediumDate' }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <p class="poll-description">{{ poll.description }}</p>
+              @if (poll.endsAt) {
+                <p class="poll-ends">Ends: {{ poll.endsAt | date:'mediumDate' }}</p>
+              }
+              <div class="poll-options">
+                @for (option of poll.options; track option.id) {
+                  @if (hasVoted(poll.id)) {
+                    <div class="poll-result">
+                      <div class="result-label">
+                        <span class="result-text" [class.voted]="userVotes()[poll.id] === option.id">
+                          {{ option.text }}
+                          @if (userVotes()[poll.id] === option.id) {
+                            <mat-icon class="vote-check">check_circle</mat-icon>
+                          }
+                        </span>
+                        <span class="result-percent">{{ votePercent(poll, option.votes) }}%</span>
+                      </div>
+                      <mat-progress-bar mode="determinate" [value]="votePercent(poll, option.votes)"></mat-progress-bar>
+                      <span class="result-count">{{ option.votes }} votes</span>
+                    </div>
+                  } @else {
+                    <button
+                      mat-stroked-button
+                      class="vote-btn"
+                      (click)="vote(poll, option.id)"
+                      [disabled]="votingPollId() === poll.id">
+                      {{ option.text }}
+                    </button>
+                  }
+                }
+              </div>
+              @if (hasVoted(poll.id)) {
+                <p class="total-votes">Total votes: {{ totalVotes(poll) }}</p>
+              }
+            </mat-card-content>
+          </mat-card>
+        }
+      </div>
+    }
+  </div>
+</section>
+
+<section class="polls-expired">
+  <div class="section-container">
+    <h2 class="section-heading">Past Polls</h2>
+    @if (expiredPolls().length === 0) {
+      <p class="empty-state">No past polls to show.</p>
+    } @else {
+      <div class="polls-grid">
+        @for (poll of expiredPolls(); track poll.id) {
+          <mat-card appearance="outlined" class="poll-card expired">
+            <mat-card-header>
+              <mat-icon matCardAvatar>poll</mat-icon>
+              <mat-card-title>{{ poll.title }}</mat-card-title>
+              <mat-card-subtitle>
+                by {{ poll.author }} · {{ poll.createdAt | date:'mediumDate' }}
+                @if (poll.endsAt) {
+                  · ended {{ poll.endsAt | date:'mediumDate' }}
+                }
+              </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <p class="poll-description">{{ poll.description }}</p>
+              <div class="poll-options">
+                @for (option of poll.options; track option.id) {
+                  <div class="poll-result">
+                    <div class="result-label">
+                      <span class="result-text">{{ option.text }}</span>
+                      <span class="result-percent">{{ votePercent(poll, option.votes) }}%</span>
+                    </div>
+                    <mat-progress-bar mode="determinate" [value]="votePercent(poll, option.votes)"></mat-progress-bar>
+                    <span class="result-count">{{ option.votes }} votes</span>
+                  </div>
+                }
+              </div>
+              <p class="total-votes">Total votes: {{ totalVotes(poll) }}</p>
+            </mat-card-content>
+          </mat-card>
+        }
+      </div>
+    }
+  </div>
+</section>

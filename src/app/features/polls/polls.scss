@@ -1,0 +1,263 @@
+.section-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.polls-header {
+  padding: 5rem 2rem 3rem;
+  text-align: center;
+  background: linear-gradient(180deg, var(--bread-bg-alt), var(--bread-bg));
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  color: var(--bread-dark-toast);
+  margin-bottom: 1rem;
+
+  .title-decoration {
+    display: inline-block;
+    margin-left: 0.5rem;
+    animation: wiggle 2s ease-in-out infinite;
+  }
+}
+
+.polls-subtitle {
+  font-size: 1.15rem;
+  color: var(--bread-text-secondary);
+  max-width: 600px;
+  margin: 0 auto 1.5rem;
+  line-height: 1.7;
+}
+
+.new-poll-btn {
+  background-color: var(--bread-golden-crust) !important;
+  color: #fff !important;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+.section-heading {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--bread-dark-toast);
+  margin-bottom: 1.5rem;
+}
+
+.polls-content {
+  padding: 2.5rem 2rem;
+  background-color: var(--bread-bg);
+}
+
+.polls-expired {
+  padding: 2.5rem 2rem 5rem;
+  background-color: var(--bread-bg-alt);
+}
+
+.polls-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.poll-card {
+  &.expired {
+    opacity: 0.85;
+  }
+}
+
+.poll-description {
+  font-size: 1rem;
+  color: var(--bread-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+.poll-ends {
+  font-size: 0.85rem;
+  color: var(--bread-warm-wheat);
+  margin-bottom: 1rem;
+}
+
+.poll-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.vote-btn {
+  width: 100%;
+  text-align: left;
+  border-radius: 8px;
+  border-color: var(--bread-golden-crust);
+  color: var(--bread-dark-toast);
+  font-weight: 500;
+  padding: 0.6rem 1rem;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba(212, 165, 116, 0.15);
+  }
+}
+
+.poll-result {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.result-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.result-text {
+  font-weight: 500;
+  color: var(--bread-dark-toast);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+
+  &.voted {
+    color: var(--bread-golden-crust);
+    font-weight: 700;
+  }
+}
+
+.vote-check {
+  font-size: 1rem;
+  width: 1rem;
+  height: 1rem;
+  color: var(--bread-golden-crust);
+}
+
+.result-percent {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--bread-text-secondary);
+}
+
+.result-count {
+  font-size: 0.8rem;
+  color: var(--bread-text-secondary);
+}
+
+.total-votes {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--bread-text-secondary);
+  font-weight: 600;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--bread-text-secondary);
+  font-size: 1.05rem;
+}
+
+.poll-form-section {
+  padding: 0 2rem;
+  background-color: var(--bread-bg);
+}
+
+.form-card {
+  margin-bottom: 2rem;
+  border-radius: 12px;
+  border: 1px solid var(--bread-border);
+  background-color: var(--bread-surface);
+  padding: 1.5rem;
+}
+
+.form-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--bread-dark-toast);
+  margin: 0 0 1.25rem;
+}
+
+.poll-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.form-field {
+  width: 100%;
+}
+
+.options-section {
+  margin: 0.5rem 0;
+}
+
+.options-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--bread-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0 0 0.75rem;
+}
+
+.option-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.option-field {
+  flex: 1;
+}
+
+.add-option-btn {
+  margin-top: 0.5rem;
+  border-radius: 8px;
+  border-color: var(--bread-golden-crust);
+  color: var(--bread-golden-crust);
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.form-error {
+  color: #c0392b;
+  font-size: 0.9rem;
+  margin: 0;
+  flex: 1 1 100%;
+}
+
+.vote-error {
+  color: #c0392b;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.save-btn {
+  background-color: var(--bread-golden-crust) !important;
+  color: #fff !important;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+.cancel-btn {
+  border-radius: 8px;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(8deg); }
+  75% { transform: rotate(-8deg); }
+}
+
+@media (max-width: 768px) {
+  .page-title { font-size: 2.25rem; }
+}
