@@ -1,0 +1,57 @@
+<div class="dashboard-header">
+  <h1 class="page-title">
+    Dashboard
+    <span class="title-decoration">📊</span>
+  </h1>
+  <p class="dashboard-subtitle">Overview of your bread-themed empire</p>
+</div>
+
+<div class="stats-grid">
+  <mat-card class="stat-card">
+    <mat-card-content>
+      <mat-icon class="stat-icon">article</mat-icon>
+      <span class="stat-count">{{ totalPosts() }}</span>
+      <span class="stat-label">Blog Posts</span>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="stat-card">
+    <mat-card-content>
+      <mat-icon class="stat-icon">code</mat-icon>
+      <span class="stat-count">{{ totalProjects() }}</span>
+      <span class="stat-label">Projects</span>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="stat-card">
+    <mat-card-content>
+      <mat-icon class="stat-icon">forum</mat-icon>
+      <span class="stat-count">{{ totalThreads() }}</span>
+      <span class="stat-label">Forum Threads</span>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="stat-card">
+    <mat-card-content>
+      <mat-icon class="stat-icon">group</mat-icon>
+      <span class="stat-count">{{ totalUsers() }}</span>
+      <span class="stat-label">Users</span>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="stat-card">
+    <mat-card-content>
+      <mat-icon class="stat-icon">comment</mat-icon>
+      <span class="stat-count">{{ totalComments() }}</span>
+      <span class="stat-label">Comments</span>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="stat-card">
+    <mat-card-content>
+      <mat-icon class="stat-icon">mail</mat-icon>
+      <span class="stat-count">{{ totalMessages() }}</span>
+      <span class="stat-label">Messages</span>
+    </mat-card-content>
+  </mat-card>
+</div>
